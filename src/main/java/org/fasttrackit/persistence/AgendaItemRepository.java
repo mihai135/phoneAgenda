@@ -1,11 +1,12 @@
 package org.fasttrackit.persistence;
 
+import org.fasttrackit.domain.AgendaItem;
 import org.fasttrackit.transfer.SaveAgendaItemRequest;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AgendaItemRepository {
 
@@ -23,6 +24,32 @@ public class AgendaItemRepository {
             preparedStatement.executeUpdate();}
 
 
+
+    }
+
+    public List<AgendaItem> getAgendaItem() throws SQLException, IOException, ClassNotFoundException {
+
+        try (Connection connection = DatabaseConfiguration.getConnection()){
+
+            String query = "SELECT id, first_name, last_name, phone_number FROM agenda_items ORDER BY id DESC ;";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+            List<AgendaItem> response = new ArrayList<>();
+
+            while (resultSet.next()){
+                AgendaItem item = new AgendaItem();
+                item.setId(resultSet.getLong("id"));
+                item.setFirst_name(resultSet.getString("first_name"));
+                item.setLast_name(resultSet.getString("last_name"));
+                item.setPhone_number(resultSet.getString("phone_number"));
+
+
+
+                response.add(item);
+            }
+
+            return response;}
 
     }
 
