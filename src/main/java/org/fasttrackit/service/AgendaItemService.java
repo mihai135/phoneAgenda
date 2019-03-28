@@ -22,5 +22,10 @@ public class AgendaItemService {
         return agendaItemRepository.getAgendaItem();
     }
 
+    public void updateAgendaItem(AgendaItem request) throws SQLException, IOException, ClassNotFoundException {
+        System.out.println("Creating item: " + request);
+        agendaItemRepository.updateAgendaItem(request);
+    }
+
 
 }

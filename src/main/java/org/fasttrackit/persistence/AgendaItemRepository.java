@@ -23,8 +23,6 @@ public class AgendaItemRepository {
 
             preparedStatement.executeUpdate();}
 
-
-
     }
 
     public List<AgendaItem> getAgendaItem() throws SQLException, IOException, ClassNotFoundException {
@@ -44,12 +42,26 @@ public class AgendaItemRepository {
                 item.setLast_name(resultSet.getString("last_name"));
                 item.setPhone_number(resultSet.getString("phone_number"));
 
-
-
                 response.add(item);
             }
 
             return response;}
+
+    }
+
+    public void updateAgendaItem(AgendaItem request) throws SQLException, IOException, ClassNotFoundException {
+
+        try (Connection connection = DatabaseConfiguration.getConnection()) {
+
+            String insertSql = "UPDATE agenda_items SET first_name = ?,"+" last_name = ?," +" phone_number = ?" + "WHERE id = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(insertSql);
+            preparedStatement.setLong(1, request.getId());
+            preparedStatement.setString(2, request.getFirst_name());
+            preparedStatement.setString(3, request.getLast_name());
+            preparedStatement.setString(4, request.getPhone_number());
+
+            preparedStatement.executeUpdate();}
 
     }
 
