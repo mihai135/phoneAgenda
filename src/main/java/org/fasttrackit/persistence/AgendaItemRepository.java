@@ -49,6 +49,17 @@ public class AgendaItemRepository {
 
     }
 
+    public void deleteAgendaItem(long id) throws SQLException, IOException, ClassNotFoundException {
+        try (Connection connection = DatabaseConfiguration.getConnection()) {
+            String query = "DELETE FROM agenda_items WHERE id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setLong(1, id);
+
+            preparedStatement.executeUpdate();
+        }
+
+    }
+
     public void updateAgendaItem(AgendaItem request) throws SQLException, IOException, ClassNotFoundException {
 
         try (Connection connection = DatabaseConfiguration.getConnection()) {

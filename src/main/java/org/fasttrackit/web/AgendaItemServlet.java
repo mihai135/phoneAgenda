@@ -48,5 +48,24 @@ public class AgendaItemServlet extends HttpServlet {
         }
     }
 
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        setAccessControlHeaders(resp);
+        String id = req.getParameter("id");
+        try {
+            agendaItemService.deleteAgendaItems(Long.parseLong(id));
+        }catch (Exception e) {
+            resp.sendError(500, "There was an error processing your request. " +
+                    e.getMessage());
+        }
+
+    }
+
+    private void setAccessControlHeaders(HttpServletResponse resp) {
+        resp.setHeader("Access-Control-Allow-Origin", "*");
+        resp.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE");
+        resp.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    }
+
 
 }

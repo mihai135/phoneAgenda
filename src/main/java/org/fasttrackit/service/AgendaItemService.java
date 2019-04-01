@@ -22,6 +22,13 @@ public class AgendaItemService {
         return agendaItemRepository.getAgendaItem();
     }
 
+    public void deleteAgendaItems(long id) throws SQLException, IOException, ClassNotFoundException {
+        System.out.println("deleting to do item " + id);
+        agendaItemRepository.deleteAgendaItem(id);
+        System.out.println("deleted to do item " + id);
+
+    }
+
     public void updateAgendaItem(AgendaItem request) throws SQLException, IOException, ClassNotFoundException {
         System.out.println("Creating item: " + request);
         agendaItemRepository.updateAgendaItem(request);
