@@ -61,6 +61,20 @@ public class AgendaItemServlet extends HttpServlet {
 
     }
 
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        setAccessControlHeaders(resp);
+        String id = req.getParameter("id");
+        ObjectMapper objectMapper = new ObjectMapper();
+        AgendaItem agendaItem = objectMapper.readValue(req.getReader(), AgendaItem.class);
+        try {
+            agendaItemService.updateAgendaItem(agendaItem);
+        } catch (Exception e) {
+            resp.sendError(500, "Internal error: " + e.getMessage());
+        }
+
+    }
+
     private void setAccessControlHeaders(HttpServletResponse resp) {
         resp.setHeader("Access-Control-Allow-Origin", "*");
         resp.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE");
